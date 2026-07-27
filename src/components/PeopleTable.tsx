@@ -1,5 +1,4 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
-import React from 'react';
 import { useParams, useSearchParams, Link } from 'react-router-dom';
 
 interface Person {
