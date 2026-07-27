@@ -1,5 +1,5 @@
 import { PeoplePage } from './components/PeoplePage';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Route, Routes, Navigate } from 'react-router-dom';
 import { Navbar } from './components/Navbar';
 
 import './App.scss';

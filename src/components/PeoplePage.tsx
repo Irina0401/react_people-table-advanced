@@ -6,6 +6,8 @@ import { Route, Routes, useSearchParams } from 'react-router-dom';
 
 export const PeoplePage: React.FC = () => {
   const [searchParams] = useSearchParams();
+  const sort = searchParams.get('sort') || '';
+  const order = searchParams.get('order') || 'asc';
 
   const query = searchParams.get('query') || '';
   const sex = searchParams.get('sex') || '';
@@ -24,6 +26,7 @@ export const PeoplePage: React.FC = () => {
   const [people, setPeople] = useState<Person[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+
 
   useEffect(() => {
     const loadData = async () => {
@@ -63,8 +66,27 @@ export const PeoplePage: React.FC = () => {
     const mother = (person.motherName || '').toLowerCase().includes(toLower);
     const father = (person.fatherName || '').toLowerCase().includes(toLower);
 
+
     return (matchesNames || mother || father) && matchesSex && matchesCentury;
   });
+
+  const sortedPeople = [...filtredPeople].sort((personA, personB) => {
+    if (!sort) {
+      return 0;
+    }
+
+    const valA = personA[sort as keyof Person];
+    const valB = personB[sort as keyof Person];
+
+    let result = 0;
+
+    if (typeof valA === 'number' && typeof valB === 'number') {
+      result = valA - valB;
+    } else if (typeof valA === 'string' && typeof valB === 'string') {
+      result = valA.localeCompare(valB);
+    }
+      return order === 'desc' ? -result : result;
+  })
 
   return (
     <section className="section">
@@ -85,17 +107,17 @@ export const PeoplePage: React.FC = () => {
                   <p data-cy="noPeopleMessage">
                     There are no people on the server
                   </p>
-                ) : (
+                    ) : (
                   <Routes>
                     <Route
                       path="/"
-                      element={<PeopleTable people={filtredPeople} />}
+                      element={<PeopleTable people={sortedPeople} />}
                     />
                     <Route
                       path=":slug"
-                      element={<PeopleTable people={filtredPeople} />}
+                      element={<PeopleTable people={sortedPeople} />}
                     />
-                  </Routes>
+                    </Routes>
                 )}
               </div>
 
