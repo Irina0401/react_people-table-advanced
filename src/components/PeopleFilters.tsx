@@ -33,11 +33,17 @@ export const PeopleFilters = () => {
 
   function handleCenturyChange(value: string) {
     const params = new URLSearchParams(searchParams);
+    const currentCenturies = params.getAll('centuries');
 
     if (value === '') {
       params.delete('centuries');
-    } else if (params.has('centuries', value)) {
+    } else if (currentCenturies.includes(value)) {
       params.delete('centuries');
+
+      currentCenturies
+      .filter(c => c !== value)
+        .forEach(c => params.append('centuries', c));
+      
     } else {
       params.append('centuries', value);
     }

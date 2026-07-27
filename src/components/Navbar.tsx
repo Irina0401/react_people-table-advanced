@@ -1,7 +1,6 @@
-import React from 'react';
 import { Link, useLocation, useSearchParams } from 'react-router-dom';
 
-export const Navbar: React.FC = () => {
+export const Navbar = () => {
   const location = useLocation();
   const [searchParams] = useSearchParams();
 

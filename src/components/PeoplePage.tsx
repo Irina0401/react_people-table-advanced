@@ -27,7 +27,6 @@ export const PeoplePage: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
-
   useEffect(() => {
     const loadData = async () => {
       try {
@@ -66,7 +65,6 @@ export const PeoplePage: React.FC = () => {
     const mother = (person.motherName || '').toLowerCase().includes(toLower);
     const father = (person.fatherName || '').toLowerCase().includes(toLower);
 
-
     return (matchesNames || mother || father) && matchesSex && matchesCentury;
   });
 
@@ -85,8 +83,9 @@ export const PeoplePage: React.FC = () => {
     } else if (typeof valA === 'string' && typeof valB === 'string') {
       result = valA.localeCompare(valB);
     }
-      return order === 'desc' ? -result : result;
-  })
+
+    return order === 'desc' ? -result : result;
+  });
 
   return (
     <section className="section">
@@ -107,7 +106,7 @@ export const PeoplePage: React.FC = () => {
                   <p data-cy="noPeopleMessage">
                     There are no people on the server
                   </p>
-                    ) : (
+                ) : (
                   <Routes>
                     <Route
                       path="/"
@@ -117,7 +116,7 @@ export const PeoplePage: React.FC = () => {
                       path=":slug"
                       element={<PeopleTable people={sortedPeople} />}
                     />
-                    </Routes>
+                  </Routes>
                 )}
               </div>
 
